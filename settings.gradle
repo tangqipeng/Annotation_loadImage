@@ -1,3 +1,4 @@
+include ':annotationlib'
 include ':MMKV'
 include ':app'
 rootProject.name = "LoadImage"

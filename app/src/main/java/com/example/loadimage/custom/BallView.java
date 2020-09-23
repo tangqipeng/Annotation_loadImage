@@ -2,7 +2,6 @@ package com.example.loadimage.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -21,11 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.loadimage.Check;
 import com.example.loadimage.R;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 
 /**
  * @author tangqipeng
