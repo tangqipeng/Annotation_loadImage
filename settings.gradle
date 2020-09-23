@@ -1,0 +1,3 @@
+include ':MMKV'
+include ':app'
+rootProject.name = "LoadImage"

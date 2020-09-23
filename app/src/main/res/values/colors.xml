@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="turkish_rose">#BA787B</color>
+    <color name="old_rose">#BF7D7B</color>
+    <color name="au_chico">#99575B</color>
+    <color name="mobster">#5C596B</color>
+    <color name="saltpan">#F1F1E5</color>
+    <color name="hemp">#947F75</color>
+    <color name="wild_sand">#E8E6DE</color>
+</resources>
