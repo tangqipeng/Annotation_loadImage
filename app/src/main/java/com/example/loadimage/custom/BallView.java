@@ -38,9 +38,9 @@ public class BallView extends Drawable {
     private Paint paint;
     private Path path;
     private PointF ballPoint;
-    private int mScreenWidth;
-    private int mScreenHeight;
     private float x, y;
+    private static final float BS_WIDTH = 55;
+    private static final float BS_HIGHT = 30;
 
     public BallView(Context context) {
         this.mContext = context;
@@ -100,8 +100,8 @@ public class BallView extends Drawable {
         WindowManager WM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         WM.getDefaultDisplay().getMetrics(mDisplayMetrics);
-        mScreenWidth = mDisplayMetrics.widthPixels;
-        mScreenHeight = mDisplayMetrics.heightPixels;
+        int mScreenWidth = mDisplayMetrics.widthPixels;
+        int mScreenHeight = mDisplayMetrics.heightPixels;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -207,14 +207,19 @@ public class BallView extends Drawable {
 
         canvas.save();
 
-        RectF bsRectf = new RectF(ballPoint.x - 85, ballPoint.y + 55, ballPoint.x - 30, ballPoint.y + 85);
+        float leftX = ballPoint.x - 85;
+        float rightX = leftX + BS_WIDTH;
+        float topY = ballPoint.y + 55;
+        float bottomY = topY + BS_HIGHT;
+
+        RectF bsRectf = new RectF(leftX, topY, rightX, bottomY);
 
         Log.i("KKKK", "bsRectf.left is " + bsRectf.left);
         canvas.rotate(20);
-        float dx = (float) (bsRectf.left - (bsRectf.left * Math.cos(Math.toRadians(20)) - bsRectf.top * Math.sin(Math.toRadians(20))) + 50);
+        float dx = (float) (bsRectf.left - (bsRectf.left * Math.cos(Math.toRadians(20)) - bsRectf.top * Math.sin(Math.toRadians(20))));
         float dy = (float) (2 * (bsRectf.top - bsRectf.top * Math.cos(Math.toRadians(20)) - bsRectf.left * Math.sin(Math.toRadians(20))));
         Log.i("KKKK", "dy is " + dy);
-        canvas.translate(dx - 85, dy - 20);
+        canvas.translate(dx - BALL_RADIUS / 2 + BS_WIDTH, dy - BS_HIGHT );
 
         paint.setColor(mContext.getResources().getColor(R.color.saltpan));
         paint.setStrokeWidth(2);

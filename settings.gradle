@@ -1,3 +1,5 @@
+include ':factorylib'
+include ':annotation'
 include ':annotationlib'
 include ':MMKV'
 include ':app'

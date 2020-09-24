@@ -22,5 +22,9 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.annotationlib.test", appContext.getPackageName());
+
+        ShapeFactory factory = new ShapeFactory();
+        IShape shape = factory.create("Rectangle");
+        shape.draw();
     }
 }
