@@ -25,7 +25,7 @@ public class FactoryGroupedClasses {
     /**
      * Will be added to the name of the generated factory class
      */
-    private static final String SUFFIX = "AnFactory";
+    private static final String SUFFIX = "Factory";
     private String qualifiedClassName;
 
     private Map<String, FactoryAnnotatedClass> itemsMap = new LinkedHashMap<>();
@@ -44,7 +44,7 @@ public class FactoryGroupedClasses {
 
     public void generateCode(Elements elementUtils, Filer filer) throws IOException {
         TypeElement superClassName = elementUtils.getTypeElement(qualifiedClassName);
-        String factoryClassName = superClassName.getSimpleName() + SUFFIX;
+        String factoryClassName = superClassName.getSimpleName().toString().substring(1) + SUFFIX;
         String qualifiedFactoryClassName = qualifiedClassName + SUFFIX;
         PackageElement pkg = elementUtils.getPackageOf(superClassName);
         String packageName = pkg.isUnnamed() ? null : pkg.getQualifiedName().toString();
@@ -60,7 +60,6 @@ public class FactoryGroupedClasses {
                 .endControlFlow();
 
         // Generate items map
-
         for (FactoryAnnotatedClass item : itemsMap.values()) {
             method.beginControlFlow("if ($S.equals(id))", item.getId())
                     .addStatement("return new $L()", item.getAnnotatedClassElement().getQualifiedName().toString())

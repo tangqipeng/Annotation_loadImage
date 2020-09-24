@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
 import com.example.loadimage.factorymode.IShape;
-import com.example.loadimage.factorymode.IShapeAnFactory;
+import com.example.loadimage.factorymode.ShapeFactory;
 import com.example.loadimage.glide.MyGlide;
 
 /**
@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        IShapeAnFactory factory = new IShapeAnFactory();
+        ShapeFactory factory = new ShapeFactory();
         IShape shape = factory.create("Rectangle");
         shape.draw();
     }
