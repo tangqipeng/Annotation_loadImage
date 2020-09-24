@@ -16,3 +16,6 @@
 - 经过多次尝试，根据Android studio的提示，将factorylib这个java-library的module下的build.gradle中的'com.google.auto.service:auto-service:1.0-rc4'前的引用变为annotationProcessor
 - 但是这样一来发现代码中找不到AutoService注解类了，于是我又加上了一个implementation 'com.google.auto.service:auto-service:1.0-rc4'，误打误撞就这么好了
 - 生成的factory类在app/build/intermediates/javac这个文件夹下面
+
+## 用gradle插件实现ASM插桩
+- 使用groovy实现gradle插件
