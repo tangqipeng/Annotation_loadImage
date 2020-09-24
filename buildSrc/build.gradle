@@ -9,6 +9,13 @@ repositories {
 
 dependencies {
     implementation gradleApi()
+    implementation localGroovy()
+    implementation "com.android.tools.build:gradle:4.0.1"
     implementation 'org.ow2.asm:asm:9.0-beta'
     implementation 'org.ow2.asm:asm-commons:9.0-beta'
+}
+
+// 指定编码格式
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
+import com.example.annotationlib.Check;
 import com.example.loadimage.factorymode.IShape;
 import com.example.loadimage.factorymode.ShapeFactory;
 import com.example.loadimage.glide.MyGlide;
@@ -21,6 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageFilterView filterView;
 
+    @Check
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,5 +41,10 @@ public class SplashActivity extends AppCompatActivity {
         ShapeFactory factory = new ShapeFactory();
         IShape shape = factory.create("Rectangle");
         shape.draw();
+    }
+
+    @Check
+    private void initView(){
+
     }
 }

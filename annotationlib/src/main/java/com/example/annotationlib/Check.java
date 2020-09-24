@@ -10,7 +10,8 @@ import java.lang.annotation.Target;
  * @date 2020/9/23 2:31 PM
  * @email tangqipeng@aograph.com
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
 public @interface Check {
 }
