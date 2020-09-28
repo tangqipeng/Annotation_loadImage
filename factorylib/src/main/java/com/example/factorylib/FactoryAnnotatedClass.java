@@ -26,7 +26,7 @@ public class FactoryAnnotatedClass {
                     String.format("id() in @%s for class %s is null or empty! that's not allowed",
                             AnFactory.class.getSimpleName(), classElement.getQualifiedName().toString()));
         }
-        // Get the full QualifiedTypeName
+        // 获取注解类
         try {
             Class<?> clazz = annotation.type();
             mQualifiedSuperClassName = clazz.getCanonicalName();
@@ -37,6 +37,8 @@ public class FactoryAnnotatedClass {
             mQualifiedSuperClassName = classTypeElement.getQualifiedName().toString();
             mSimpleTypeName = classTypeElement.getSimpleName().toString();
         }
+        System.out.println("mQualifiedSuperClassName is "+mQualifiedSuperClassName);
+        System.out.println("mSimpleTypeName is "+mSimpleTypeName);
     }
 
     public TypeElement getAnnotatedClassElement() {

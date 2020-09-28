@@ -1,4 +1,4 @@
-package com.example.loadimage.factorymode;
+package com.example.loadimage.mode;
 
 import com.example.annotation.AnFactory;
 

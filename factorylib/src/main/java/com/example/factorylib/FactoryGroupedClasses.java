@@ -45,16 +45,20 @@ public class FactoryGroupedClasses {
     public void generateCode(Elements elementUtils, Filer filer) throws IOException {
         TypeElement superClassName = elementUtils.getTypeElement(qualifiedClassName);
         String factoryClassName = superClassName.getSimpleName().toString().substring(1) + SUFFIX;
-        String qualifiedFactoryClassName = qualifiedClassName + SUFFIX;
         PackageElement pkg = elementUtils.getPackageOf(superClassName);
         String packageName = pkg.isUnnamed() ? null : pkg.getQualifiedName().toString();
 
+        packageName = packageName + ".factory";
+        System.out.println("packageName is "+packageName);
+
+
+        //创建一个create方法，带了一个String类型的id参数
         MethodSpec.Builder method = MethodSpec.methodBuilder("create")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, "id")
                 .returns(TypeName.get(superClassName.asType()));
 
-        // check if id is null
+        // 检查id是否为空，并抛出异常
         method.beginControlFlow("if (id == null)")
                 .addStatement("throw new IllegalArgumentException($S)", "id is null!")
                 .endControlFlow();

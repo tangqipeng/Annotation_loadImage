@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
 import com.example.annotationlib.Check;
-import com.example.loadimage.factorymode.IShape;
-import com.example.loadimage.factorymode.ShapeFactory;
+import com.example.loadimage.mode.Circle;
+import com.example.loadimage.mode.IShape;
 import com.example.loadimage.glide.MyGlide;
+import com.example.loadimage.mode.decorator.RedShapeDecorator;
+import com.example.loadimage.mode.factory.ShapeFactory;
 
 /**
  * @author tangqipeng
@@ -22,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageFilterView filterView;
 
-    @Check
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +39,17 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+        //装饰模式
+        IShape redCircle = new RedShapeDecorator(new Circle());
+        redCircle.draw();
+
+        //工厂模式
         ShapeFactory factory = new ShapeFactory();
         IShape shape = factory.create("Rectangle");
         shape.draw();
+
+        //字节码插桩
+        initView();
     }
 
     @Check

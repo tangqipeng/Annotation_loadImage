@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.loadimage.Utils;
+
 /**
  * @author tangqipeng
  * @date 2020/9/22 6:24 PM
@@ -32,6 +34,7 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
 
     public static final int STROKE_WIDTH = 8;
     public static final float DEFAULT_RADIUS = 150;
+    private Context mContext;
     private int mScreenWidth;
     private int mScreenHeight;
     private ImageView mBallView;
@@ -59,6 +62,7 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
     }
 
     private void initStuff(Context context) {
+        this.mContext = context;
         setWillNotDraw(false);
         getScreenParams();
         mPaint = new Paint();
@@ -102,9 +106,13 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
     @Override
     public void onClick(View v) {
         Log.i("HHHH", ballPoint.x + ","+ ballPoint.y);
-        PointF endPoint = new PointF(ballPoint.x, mScreenHeight - 80 - 3*mBallDrawable.getBallRadius());
+        int navHight = Utils.getNavigationBarHeight(mContext);
+        int staHight = Utils.getStatusHeight(mContext);
+        Log.i("HHHH", navHight + ","+ staHight);
+        PointF endPoint = new PointF(ballPoint.x, mScreenHeight - staHight - navHight - mBallDrawable.getBallRadius());
         startAnimator(ballPoint, endPoint);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startAnimator(PointF startPoint, PointF endPoint){

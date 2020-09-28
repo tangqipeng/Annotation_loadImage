@@ -69,24 +69,22 @@ public class FactoryProcessor extends AbstractProcessor {
      */
     private void checkValidClass(FactoryAnnotatedClass item) throws ProcessingException {
 
-        // Cast to TypeElement, has more type specific methods
         TypeElement classElement = item.getAnnotatedClassElement();
 
-        if (!classElement.getModifiers().contains(Modifier.PUBLIC)) {
+        if (!classElement.getModifiers().contains(Modifier.PUBLIC)) {//是否是public的类
             throw new ProcessingException(classElement, "The class %s is not public.",
                     classElement.getQualifiedName().toString());
         }
 
-        // Check if it's an abstract class
-        if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {
+        if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {//是否是抽象类
             throw new ProcessingException(classElement,
                     "The class %s is abstract. You can't annotate abstract classes with @%",
                     classElement.getQualifiedName().toString(), AnFactory.class.getSimpleName());
         }
 
-        // Check inheritance: Class must be child class as specified in @Factory.type();
+        // Check inheritance: Class must be child class as specified in @AnFactory.type();
         TypeElement superClassElement = elementUtils.getTypeElement(item.getQualifiedSuperClassName());
-        if (superClassElement.getKind() == ElementKind.INTERFACE) {
+        if (superClassElement.getKind() == ElementKind.INTERFACE) {//注解的对象如果是接口
             // Check interface implemented
             if (!classElement.getInterfaces().contains(superClassElement.asType())) {
                 throw new ProcessingException(classElement,
@@ -95,15 +93,8 @@ public class FactoryProcessor extends AbstractProcessor {
                         item.getQualifiedSuperClassName());
             }
         } else {
-            // Check subclassing
             TypeElement currentClass = classElement;
             while (true) {
-                /**
-                 * getSuperclass()
-                 * Returns the direct superclass of this type element.
-                 * If this type element represents an interface or the class java.lang.Object,
-                 * then a NoType with kind NONE is returned.
-                 */
                 TypeMirror superClassType = currentClass.getSuperclass();
 
                 if (superClassType.getKind() == TypeKind.NONE) {
@@ -113,7 +104,7 @@ public class FactoryProcessor extends AbstractProcessor {
                             classElement.getQualifiedName().toString(), AnFactory.class.getSimpleName(),
                             item.getQualifiedSuperClassName());
                 }
-
+                System.out.println("item.getQualifiedSuperClassName() is "+item.getQualifiedSuperClassName());
                 if (superClassType.toString().equals(item.getQualifiedSuperClassName())) {
                     // Required super class found
                     break;
@@ -124,19 +115,18 @@ public class FactoryProcessor extends AbstractProcessor {
             }
         }
 
-        // Check if an empty public constructor is given
+        // 找到公开的无参构造方法，返回
         for (Element enclosed : classElement.getEnclosedElements()) {
             if (enclosed.getKind() == ElementKind.CONSTRUCTOR) {
                 ExecutableElement constructorElement = (ExecutableElement) enclosed;
                 if (constructorElement.getParameters().size() == 0 &&
                         constructorElement.getModifiers().contains(Modifier.PUBLIC)) {
-                    // Found an empty constructor
                     return;
                 }
             }
         }
 
-        // No empty constructor found
+        //有构造函数，但是带了参数
         throw new ProcessingException(classElement,
                 "The class %s must provide an public empty default constructor",
                 classElement.getQualifiedName().toString());
@@ -146,10 +136,9 @@ public class FactoryProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
         try {
-            // Scan classes
             for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(AnFactory.class)) {
 
-                // Check if a class has been annotated with @Factory
+                // Check if a class has been annotated with @ANFactory
                 if (annotatedElement.getKind() != ElementKind.CLASS) {
                     throw new ProcessingException(annotatedElement, "Only classes can be annotated with @%s",
                             AnFactory.class.getSimpleName());

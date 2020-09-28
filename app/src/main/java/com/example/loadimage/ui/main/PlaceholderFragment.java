@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loadimage.R;
 
+import java.util.List;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -68,6 +70,16 @@ public class PlaceholderFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         ImageAdapter adapter = new ImageAdapter(getActivity());
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        pageViewModel.getLists().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                adapter.setUrls(strings);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public PageViewModel getPageViewModel() {
+        return pageViewModel;
     }
 }
