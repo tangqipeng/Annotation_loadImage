@@ -6,17 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loadimage.R;
-
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,7 +35,7 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
+        pageViewModel = new PageViewModel();
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -55,12 +50,7 @@ public class PlaceholderFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         final TextView textView = root.findViewById(R.id.section_label);
         recyclerView = root.findViewById(R.id.recyclerview);
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        pageViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         initRecyclerView();
         return root;
     }
@@ -70,16 +60,10 @@ public class PlaceholderFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         ImageAdapter adapter = new ImageAdapter(getActivity());
         recyclerView.setAdapter(adapter);
-        pageViewModel.getLists().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> strings) {
-                adapter.setUrls(strings);
-                adapter.notifyDataSetChanged();
-            }
+        pageViewModel.getLists().observe(getViewLifecycleOwner(), strings -> {
+            adapter.setUrls(strings);
+            adapter.notifyDataSetChanged();
         });
     }
 
-    public PageViewModel getPageViewModel() {
-        return pageViewModel;
-    }
 }

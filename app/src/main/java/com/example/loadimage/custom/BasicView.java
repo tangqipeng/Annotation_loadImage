@@ -1,5 +1,6 @@
 package com.example.loadimage.custom;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -43,8 +44,8 @@ public class BasicView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mCanvasWidth = canvas.getWidth();
-        mCanvasHeight = canvas.getHeight();
+        mCanvasWidth = getWidth();
+        mCanvasHeight = getHeight();
         canvas.drawARGB(255, 139, 197, 186);
         drawAxis(canvas);
 
@@ -179,6 +180,7 @@ public class BasicView extends View {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float pointx = event.getX();

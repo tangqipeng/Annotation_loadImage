@@ -25,17 +25,14 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this, BallActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, BallActivity.class);
+            startActivity(intent);
 
 
 //                ((PlaceholderFragment)sectionsPagerAdapter.getItem(0)).getPageViewModel().getLists().getValue().add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg");
-            }
         });
 
 

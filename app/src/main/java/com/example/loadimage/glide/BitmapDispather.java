@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
 
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,22 +41,15 @@ public class BitmapDispather extends Thread {
 
     private void showBitmap(final Bitmap bitmap, final BitmapRequest request) {
         if (request.getImage() != null && bitmap != null && request.getImage().getTag().equals(request.getUrlMd5())){
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    request.getImage().setImageBitmap(bitmap);
-                }
-            });
+            mHandler.post(() -> request.getImage().setImageBitmap(bitmap));
         }
     }
 
     private Bitmap findBitmap(BitmapRequest request) {
-        Bitmap bitmap = downloadBitmap(request.getUrl());
-        return bitmap;
+        return downloadBitmap(request.getUrl());
     }
 
     private Bitmap downloadBitmap(String uri) {
-        FileOutputStream fos = null;
         InputStream is = null;
         Bitmap bitmap = null;
         try {
@@ -71,8 +63,6 @@ public class BitmapDispather extends Thread {
             try {
                 if (is != null)
                     is.close();
-                if (fos != null)
-                    fos.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,12 +74,7 @@ public class BitmapDispather extends Thread {
         if (request.getLoadingResId() > 0) {
             final ImageView imageView = request.getImage();
             final int resID = request.getLoadingResId();
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    imageView.setImageResource(resID);
-                }
-            });
+            mHandler.post(() -> imageView.setImageResource(resID));
         }
     }
 }

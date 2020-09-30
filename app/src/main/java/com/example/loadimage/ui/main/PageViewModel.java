@@ -1,6 +1,5 @@
 package com.example.loadimage.ui.main;
 
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -20,12 +19,7 @@ public class PageViewModel extends ViewModel {
 
 
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
-    private LiveData<String> mText = Transformations.map(mIndex, new Function<Integer, String>() {
-        @Override
-        public String apply(Integer input) {
-            return "Hello world from section: " + input;
-        }
-    });
+    private LiveData<String> mText = Transformations.map(mIndex, input -> "Hello world from section: " + input);
 
     public void setIndex(int index) {
         mIndex.setValue(index);
@@ -37,12 +31,7 @@ public class PageViewModel extends ViewModel {
 
     //----------------
     private MutableLiveData<String[]> mImageUrls = new MutableLiveData<>(urls);
-    private LiveData<List<String>> mLists = Transformations.map(mImageUrls, new Function<String[], List<String>>() {
-        @Override
-        public List<String> apply(String[] input) {
-            return new ArrayList<>(Arrays.asList(input));
-        }
-    });
+    private LiveData<List<String>> mLists = Transformations.map(mImageUrls, input -> new ArrayList<>(Arrays.asList(input)));
 
     public LiveData<List<String>> getLists() {
         return mLists;

@@ -24,10 +24,6 @@ import java.util.List;
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-//    private String[] urls = {"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3003960322,3342785987&fm=26&gp=0.jpg",
-//    "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=294837591,2117133976&fm=26&gp=0.jpg",
-//    "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3811847585,1117697310&fm=26&gp=0.jpg",
-//    "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=203392229,2792120288&fm=26&gp=0.jpg"};
     private Context mContext;
     private List<String> mUrls;
     private LayoutInflater inflater;

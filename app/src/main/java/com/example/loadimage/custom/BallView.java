@@ -317,12 +317,6 @@ public class BallView extends Drawable {
         return PixelFormat.TRANSLUCENT;
     }
 
-    /**
-     * 高度要容得下两个鱼身长度
-     * 8.36计算过程 身长6.79减去头顶到中部位置的长度2.6 再乘以2
-     *
-     * @return
-     */
     @Override
     public int getIntrinsicHeight() {
         return (int) (2f * BALL_RADIUS);
