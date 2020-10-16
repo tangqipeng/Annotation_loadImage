@@ -31,6 +31,15 @@
         <activity android:name=".BallActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".TestAActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"/>
+        <activity android:name=".TestBActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"/>
+        <activity android:name=".TestCActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

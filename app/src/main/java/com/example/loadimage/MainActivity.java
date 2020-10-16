@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-            Intent intent = new Intent(MainActivity.this, BallActivity.class);
+            Intent intent = new Intent(MainActivity.this, TestCActivity.class);
             startActivity(intent);
 
 
