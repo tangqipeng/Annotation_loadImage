@@ -70,6 +70,12 @@ public class Utils {
         return metrics.widthPixels;
     }
 
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
+    }
+
     public static int getNavigationBarHeight(Context context) {
         int result = 0;
         if (hasNavBar(context)) {

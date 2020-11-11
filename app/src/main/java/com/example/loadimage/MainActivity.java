@@ -3,8 +3,10 @@ package com.example.loadimage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.loadimage.custom.BallView;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-            Intent intent = new Intent(MainActivity.this, TestCActivity.class);
+            Intent intent = new Intent(MainActivity.this, BallActivity.class);
             startActivity(intent);
 
 

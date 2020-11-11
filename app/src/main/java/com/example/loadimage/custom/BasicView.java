@@ -2,6 +2,7 @@ package com.example.loadimage.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.loadimage.ImageShowActivity;
+
 /**
  * @author tangqipeng
  * @date 2020/9/3 3:47 PM
@@ -22,11 +25,11 @@ import androidx.annotation.Nullable;
 public class BasicView extends View {
     private static final String TAG = BasicView.class.getName();
 
-    private Paint paint;
+    private final Paint paint;
     private int mCanvasWidth;
     private int mCanvasHeight;
     private Rect mRect;
-    private Path path;
+    private final Path path;
 
     public BasicView(Context context) {
         this(context, null);
@@ -38,8 +41,16 @@ public class BasicView extends View {
 
     public BasicView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
         paint = new Paint();
         path = new Path();
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImageShowActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -50,6 +61,14 @@ public class BasicView extends View {
         drawAxis(canvas);
 
         drawRect(canvas);
+
+//        float[] pts={50,50,
+//                400,50,
+//                400,600,
+//                60,600, };
+//        canvas.drawColor(Color.WHITE);                  //白色背景
+//        paint.setStrokeWidth((float) 20.0);
+//        canvas.drawPoints(pts, paint);
     }
 
     private void drawRect(Canvas canvas) {
@@ -84,6 +103,8 @@ public class BasicView extends View {
 //        path.quadTo(200, 300, 300, 500);
         path.cubicTo(200, 300, 300, 500, 400, 400);
         canvas.drawPath(path, paint);
+
+
     }
 
     /**

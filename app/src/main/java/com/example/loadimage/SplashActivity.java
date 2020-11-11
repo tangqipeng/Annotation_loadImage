@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         MyGlide.with(this).loading(R.mipmap.meinv_3).load("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2550253929,3330095031&fm=26&gp=0.jpg").into(filterView);
 
         filterView.setOnClickListener(view -> {
-            Intent intent = new Intent(SplashActivity.this, TestCActivity.class);
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
         });
 

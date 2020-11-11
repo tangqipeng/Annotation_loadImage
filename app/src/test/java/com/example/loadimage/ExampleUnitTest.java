@@ -13,5 +13,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+
+        for (int i = 0; i < 10; i++) {
+            double radians = Math.random() * 81;
+            System.out.println(radians);
+        }
     }
 }

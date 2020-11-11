@@ -215,11 +215,12 @@ public class BallView extends Drawable {
         RectF bsRectf = new RectF(leftX, topY, rightX, bottomY);
 
         Log.i("KKKK", "bsRectf.left is " + bsRectf.left);
-        canvas.rotate(20);
-        float dx = (float) (bsRectf.left - (bsRectf.left * Math.cos(Math.toRadians(20)) - bsRectf.top * Math.sin(Math.toRadians(20))));
-        float dy = (float) (2 * (bsRectf.top - bsRectf.top * Math.cos(Math.toRadians(20)) - bsRectf.left * Math.sin(Math.toRadians(20))));
-        Log.i("KKKK", "dy is " + dy);
-        canvas.translate(dx - BALL_RADIUS / 2 + BS_WIDTH, dy - BS_HIGHT );
+        canvas.rotate(20, leftX+ BS_WIDTH/2, topY + BS_HIGHT/2);
+//        canvas.rotate(20);
+//        float dx = (float) (bsRectf.left - (bsRectf.left * Math.cos(Math.toRadians(20)) - bsRectf.top * Math.sin(Math.toRadians(20))));
+//        float dy = (float) (2 * (bsRectf.top - bsRectf.top * Math.cos(Math.toRadians(20)) - bsRectf.left * Math.sin(Math.toRadians(20))));
+//        Log.i("KKKK", "dy is " + dy);
+//        canvas.translate(dx - BALL_RADIUS / 2 + BS_WIDTH, dy - BS_HIGHT );
 
         paint.setColor(mContext.getResources().getColor(R.color.saltpan));
         paint.setStrokeWidth(2);
