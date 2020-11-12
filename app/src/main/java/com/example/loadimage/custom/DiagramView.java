@@ -373,6 +373,8 @@ public class DiagramView extends View {
             }
         }
         if (mAdapter.openRightYAxle()) {
+            mRightItemPaint.setStrokeWidth(30f);
+            mRightItemPaint.setStyle(Paint.Style.FILL);
             for (int j = 0; j < typeList.size(); j++) {
                 mRightItemPaint.setColor(getResources().getColor(mAdapter.getRightItemColor(j)));
                 float[] floats = new float[typeList.get(j).size()];
@@ -381,6 +383,7 @@ public class DiagramView extends View {
                 }
                 canvas.drawPoints(floats, mRightItemPaint);
             }
+
             mRightItemPaint.setStrokeWidth(4);
             mRightItemPaint.setStyle(Paint.Style.STROKE);
             for (int i = 0; i < pathList.size(); i++) {
