@@ -16,7 +16,7 @@ public class PageViewModel extends ViewModel {
             "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3811847585,1117697310&fm=26&gp=0.jpg",
             "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=203392229,2792120288&fm=26&gp=0.jpg"};
 
-
+    List<String> list = new ArrayList<>();
 
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
     private LiveData<String> mText = Transformations.map(mIndex, input -> "Hello world from section: " + input);
@@ -38,6 +38,9 @@ public class PageViewModel extends ViewModel {
     }
 
 
+    private void initAdd(){
+        list.add("sdad");
+    }
 
 
 }

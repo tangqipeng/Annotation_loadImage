@@ -1,25 +1,19 @@
 package com.example.loadimage.custom;
 
 import android.animation.FloatEvaluator;
-import android.animation.ValueAnimator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.RequiresApi;
-
-import com.example.loadimage.Utils;
 
 /**
  * @author tangqipeng
@@ -29,14 +23,12 @@ import com.example.loadimage.Utils;
 public class BallDrawableView extends RelativeLayout implements View.OnClickListener {
 
     public static final int STROKE_WIDTH = 8;
-    private Context mContext;
     private int mScreenHeight;
     private ImageView mBallView;
-    private BallView mBallDrawable;
     private Paint mPaint;
     private Canvas canvas;
-    private PointF ballPoint;
-//    private ObjectAnimator animator;
+
+    private int y;
 
     public BallDrawableView(Context context) {
         this(context, null);
@@ -52,29 +44,32 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
     }
 
     private void initStuff(Context context) {
-        this.mContext = context;
         setWillNotDraw(false);
-        getScreenParams();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(STROKE_WIDTH);
+        int x = 300;
+        y = 300;
 
         mBallView = new ImageView(context);
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        params.width = 300;
-//        params.height = 300;
+        LayoutParams params = new LayoutParams(x, y);
         mBallView.setLayoutParams(params);
-        mBallDrawable = new BallView(context);
-//        mBallDrawable.setBallPoint(200, 200);
+        BallView mBallDrawable = new BallView(context);
+        PointF ballPoint = new PointF(150, 150);
+        mBallDrawable.setBallPoint(ballPoint);
         mBallView.setImageDrawable(mBallDrawable);
 
         addView(mBallView);
 
-        ballPoint = mBallDrawable.getBallPoint();
-
         mBallView.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mScreenHeight = MeasureSpec.getSize(heightMeasureSpec);
     }
 
     @Override
@@ -95,41 +90,17 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
-        Log.i("HHHH", ballPoint.x + ","+ ballPoint.y);
-        int navHight = Utils.getNavigationBarHeight(mContext);
-        int staHight = Utils.getStatusHeight(mContext);
-        Log.i("HHHH", navHight + ","+ staHight);
-        PointF endPoint = new PointF(ballPoint.x, mScreenHeight - staHight - navHight - mBallDrawable.getBallRadius());
-        startAnimator(ballPoint, endPoint);
+        startAnimator();
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void startAnimator(PointF startPoint, PointF endPoint){
-        ValueAnimator animator = ValueAnimator.ofObject(new FloatEvaluator(), startPoint.y, endPoint.y);
-        animator.addUpdateListener(animation -> {
-//                mBallView.animateTransform(); = (PointF)animation.getAnimatedValue();
-            float y = (float) animation.getAnimatedValue();
-            Log.i("HHHH", ballPoint.x + ","+ ballPoint.y);
-            mBallView.setY(y);
-            invalidate();
-        });
-        animator.setDuration(2000);
+    private void startAnimator(){
+
+        ObjectAnimator animator = ObjectAnimator.ofObject(mBallView, "y", new FloatEvaluator(), 0, mScreenHeight - 300);
+        animator.setDuration(1200);
         animator.setInterpolator(new BounceInterpolator());
-        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setRepeatMode(ObjectAnimator.REVERSE);
         animator.start();
-
-    }
-
-
-    /**
-     * 获取屏幕宽高
-     */
-    public void getScreenParams() {
-        WindowManager WM = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics mDisplayMetrics = new DisplayMetrics();
-        WM.getDefaultDisplay().getMetrics(mDisplayMetrics);
-        mScreenHeight = mDisplayMetrics.heightPixels;
     }
 
 }

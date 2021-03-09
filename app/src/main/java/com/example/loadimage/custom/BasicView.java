@@ -1,5 +1,8 @@
 package com.example.loadimage.custom;
 
+import android.animation.PointFEvaluator;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +10,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.example.loadimage.ImageShowActivity;
 
@@ -22,7 +28,7 @@ import com.example.loadimage.ImageShowActivity;
  * @date 2020/9/3 3:47 PM
  * @email tangqipeng@aograph.com
  */
-public class BasicView extends View {
+public class BasicView extends View implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = BasicView.class.getName();
 
     private final Paint paint;
@@ -30,6 +36,11 @@ public class BasicView extends View {
     private int mCanvasHeight;
     private Rect mRect;
     private final Path path;
+    private float percent = 0.1f;
+    private PointF oldView = null;
+    private PointF view = null;
+    private PointF pointF = null;
+    private PointF pointB = null;
 
     public BasicView(Context context) {
         this(context, null);
@@ -47,16 +58,21 @@ public class BasicView extends View {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ImageShowActivity.class);
-                context.startActivity(intent);
+                start(pointF, pointB);
+//                Intent intent = new Intent(context, ImageShowActivity.class);
+//                context.startActivity(intent);
             }
         });
+
+        pointF = new PointF(10f, 500f);
+        pointB = new PointF(500f, 900f);
     }
+//    public static final int TRANS_X = 600;
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mCanvasWidth = getWidth();
-        mCanvasHeight = getHeight();
+//        mCanvasWidth = getWidth();
+//        mCanvasHeight = getHeight();
         canvas.drawARGB(255, 139, 197, 186);
         drawAxis(canvas);
 
@@ -69,6 +85,89 @@ public class BasicView extends View {
 //        canvas.drawColor(Color.WHITE);                  //白色背景
 //        paint.setStrokeWidth((float) 20.0);
 //        canvas.drawPoints(pts, paint);
+
+        paint.setColor(Color.RED);
+        canvas.drawLine(pointF.x, pointF.y, pointB.x, pointB.y, paint);
+
+//        float f = (float) Math.sqrt(Math.pow(Math.abs(pointF.x - pointB.x),2) + Math.pow(Math.abs(pointF.y - pointB.y),2));
+//        animate(pointF, pointB);
+
+//        oldView = pointF;
+//        view = pointF;
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(oldView.x, oldView.y, view.x, view.y, paint);
+        Log.i("LLLL", "onDraw");
+        Log.i("LLLL", "oldView is "+oldView);
+        Log.i("LLLL", "view is "+view);
+
+    }
+
+    private void start(PointF pointF, PointF pointB){
+        ValueAnimator animator = new ValueAnimator();
+//        float offsetX = view.x;
+//        float offsetY = view.y;
+        animator.setDuration(2000);
+// 和ofFloat类似，设置属性的起始值和结束值。
+        animator.setObjectValues(pointF, pointB);
+// 设置自定义的Evaluator.
+        animator.setEvaluator(new TypeEvaluator<PointF>() {
+            @Override
+            // api level 21以上已经实现了PointFEvalutor.
+            public PointF evaluate(float fraction, PointF startValue, PointF endValue) {
+                PointF pointF = new PointF();
+//                float d = fraction * TRANS_X;
+                pointF.x = endValue.x + endValue.x * percent;
+                pointF.y = endValue.y + endValue.y * percent;
+
+                Log.i("LLLL", "pointF is "+pointF);
+                Log.i("LLLL", "fraction is "+fraction);
+                Log.i("LLLL", "startValue is "+startValue);
+                Log.i("LLLL", "endValue is "+endValue);
+                oldView = endValue;
+
+                return pointF;
+            }
+        });
+// 通过监听器得到相应的Evaluator值，并应用。
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                PointF pointF = (PointF) animation.getAnimatedValue();
+                view.set(pointF.x, pointF.y);
+                invalidate();
+//                postInvalidate();
+                Log.i("LLLL", "view is "+view);
+//                canvas.drawLine(oldView.x, oldView.y, view.x, view.y, paint);
+//                requestLayout();
+            }
+        });
+        animator.start();
+    }
+
+    //通过属性动画来画出帧动画
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void animate(PointF startF, PointF endf) {
+//        ValueAnimator valueAnimator = ValueAnimator.ofFloat(percent, f);
+        ValueAnimator valueAnimator = ValueAnimator.ofObject(new PointFEvaluator(), startF, endf);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(this);
+//        valueAnimator.setEvaluator(new FloatEvaluator(){
+//            @Override
+//            public Float evaluate(float fraction, Number startValue, Number endValue) {
+//                float startFloat = startValue.floatValue();
+//                Log.i("LLLL", "startFloat is "+startFloat);
+//                return startFloat + fraction * (endValue.floatValue() - startFloat);
+//            }
+//        });
+        valueAnimator.start();
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        percent= (float) animation.getAnimatedValue();
+//        setTextColor(Color.argb((int) (percent * 255), 255, 255, 255));
+        Log.i("LLLL", "percent is "+percent);
+        invalidate();
     }
 
     private void drawRect(Canvas canvas) {
@@ -216,6 +315,7 @@ public class BasicView extends View {
                 Log.i(TAG, "mRect.centerX is "+mRect.centerX() +", mRect.centerY is "+mRect.centerY());
                 break;
             case MotionEvent.ACTION_UP:
+                start(pointF, pointB);
                 break;
         }
         return super.onTouchEvent(event);

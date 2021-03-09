@@ -49,7 +49,7 @@ public class BallView extends Drawable {
         paint.setAntiAlias(true);
         path = new Path();
 //        ballPoint = new PointF(mScreenWidth / 2, mScreenHeight / 2);
-        ballPoint = new PointF(BALL_RADIUS, BALL_RADIUS);
+//        ballPoint = new PointF(BALL_RADIUS, BALL_RADIUS);
     }
 
 
@@ -65,8 +65,9 @@ public class BallView extends Drawable {
         ballPoint = new PointF(x, y);
     }
 
-    public void setBallPoint(float x, float y) {
-        this.ballPoint = new PointF(x, y);
+    public void setBallPoint(PointF point) {
+        this.ballPoint = point;
+//        invalidateSelf();
     }
 
     public float getX() {

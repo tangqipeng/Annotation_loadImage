@@ -2,6 +2,7 @@ package com.example.loadimage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import com.example.loadimage.mode.factory.ShapeFactory;
  * @date 2020/9/3 9:51 AM
  * @email tangqipeng@aograph.com
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +49,11 @@ public class SplashActivity extends AppCompatActivity {
 
     @Check
     private void initView(){
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }
