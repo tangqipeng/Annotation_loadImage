@@ -1,5 +1,7 @@
 package com.example.loadimage;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 //                ((PlaceholderFragment)sectionsPagerAdapter.getItem(0)).getPageViewModel().getLists().getValue().add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg");
         });
 
+        Context context = this;
+
+        if (context instanceof Activity){
+
+        }
 
     }
 }

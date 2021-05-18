@@ -1,7 +1,10 @@
 package com.example.loadimage.custom;
 
 import android.animation.FloatEvaluator;
+import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -14,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.loadimage.BallInterpolator;
 
 /**
  * @author tangqipeng
@@ -96,9 +101,16 @@ public class BallDrawableView extends RelativeLayout implements View.OnClickList
 
     private void startAnimator(){
 
-        ObjectAnimator animator = ObjectAnimator.ofObject(mBallView, "y", new FloatEvaluator(), 0, mScreenHeight - 300);
+        @SuppressLint("ObjectAnimatorBinding")
+        ObjectAnimator animator = ObjectAnimator.ofObject(mBallView, "y", new IntEvaluator() {
+            @Override
+            public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
+                y = (int) (startValue + (endValue - startValue) * fraction);
+                return y;
+            }
+        }, 0, mScreenHeight - 300);
         animator.setDuration(1200);
-        animator.setInterpolator(new BounceInterpolator());
+        animator.setInterpolator(new BallInterpolator(0.3f));
         animator.setRepeatMode(ObjectAnimator.REVERSE);
         animator.start();
     }
